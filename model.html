@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal - Online Registration System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --hospital-blue: #0066cc;
+            --hospital-light-blue: #e6f2ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .top-header {
+            background-color: var(--hospital-blue);
+            color: white;
+            padding: 8px 0;
+        }
+
+        .main-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--hospital-blue);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        /* Navigation Styles */
+        .main-nav {
+            background-color: var(--hospital-blue);
+            padding: 0;
+        }
+
+        .main-nav .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .main-nav .navbar-nav .nav-link:hover,
+        .main-nav .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 102, 204, 0.8), rgba(0, 102, 204, 0.8)), url('https://picsum.photos/seed/hospital/1920/400.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 30px;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Card Styles */
+        .service-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .service-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .dashboard-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            height: 100%;
+            transition: all 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .dashboard-card .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--hospital-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+        }
+
+        /* Auth Styles */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 102, 204, 0.8), rgba(0, 102, 204, 0.8)), url('https://picsum.photos/seed/hospital2/1920/1080.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .auth-image {
+            flex: 1;
+            min-width: 300px;
+            background: url('https://picsum.photos/seed/hospital3/600/900.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .auth-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--hospital-blue);
+            border-bottom-color: var(--hospital-blue);
+        }
+
+        .auth-content {
+            display: none;
+        }
+
+        .auth-content.active {
+            display: block;
+        }
+
+        /* Patient Dashboard Styles */
+        .patient-header {
+            background: linear-gradient(135deg, var(--hospital-blue), #0052a3);
+            color: white;
+            padding: 30px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .patient-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+        }
+
+        .appointment-card {
+            border-left: 4px solid var(--hospital-blue);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .appointment-date {
+            background-color: var(--hospital-light-blue);
+            color: var(--hospital-blue);
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* Notification Styles */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+            max-width: 350px;
+        }
+
+        .notification {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .notification.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .notification.info {
+            border-left: 4px solid var(--info-color);
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .notification.success i {
+            color: var(--success-color);
+        }
+
+        .notification.error i {
+            color: var(--danger-color);
+        }
+
+        .notification.warning i {
+            color: var(--warning-color);
+        }
+
+        .notification.info i {
+            color: var(--info-color);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 10px;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            color: var(--hospital-blue);
+            border-bottom-color: var(--hospital-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid var(--hospital-light-blue);
+            color: var(--hospital-blue);
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background-color: var(--hospital-light-blue);
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 50px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        footer h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin-bottom: 10px;
+        }
+
+        footer ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        footer ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Modal Styles */
+        .modal-header {
+            background-color: var(--hospital-blue);
+            color: white;
+        }
+
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--hospital-blue);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .service-card .card-img-top {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-telephone-fill me-2"></i>
+                        <span>Emergency: +91 12345 67890</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        <span>info@hospitalportal.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="logo">
+                        <i class="bi bi-hospital"></i>
+                        <span>Hospital Portal</span>
+                    </div>
+                </div>
+                <div class="col-md-8 text-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end">
+                        <button class="btn btn-outline-primary me-2" onclick="showPage('login')">
+                            <i class="bi bi-person-circle me-1"></i> Login
+                        </button>
+                        <button class="btn btn-primary" onclick="showPage('register')">
+                            <i class="bi bi-person-plus-fill me-1"></i> Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark main-nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showPage('home')">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('services')">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('doctors')">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('appointments')">Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('departments')">Departments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('contact')">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Home Page -->
+        <div id="home-page" class="page-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h1>Welcome to Hospital Portal</h1>
+                            <p>Your trusted online platform for healthcare services. Book appointments, consult doctors, and manage your health records all in one place.</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-light btn-lg" onclick="showPage('appointments')">
+                                    <i class="bi bi-calendar-check me-2"></i> Book Appointment
+                                </button>
+                                <button class="btn btn-outline-light btn-lg" onclick="showPage('register')">
+                                    <i class="bi bi-person-plus me-2"></i> Register Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section class="container my-5">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-3">Our Services</h2>
+                        <p class="text-muted">We provide comprehensive healthcare services to meet all your medical needs</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://picsum.photos/seed/consultation/400/200.jpg" class="card-img-top" alt="Online Consultation">
+                            <div class="card-body">
+                                <h5 class="card-title">Online Consultation</h5>
+                                <p class="card-text">Connect with specialist doctors from the comfort of your home through video consultation.</p>
+                                <a href="#" class="btn btn-primary" onclick="showPage('appointments')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://picsum.photos/seed/appointment/400/200.jpg" class="card-img-top" alt="Appointment Booking">
+                            <div class="card-body">
+                                <h5 class="card-title">Appointment Booking</h5>
+                                <p class="card-text">Schedule appointments with doctors at your preferred time and date with our easy booking system.</p>
+                                <a href="#" class="btn btn-primary" onclick="showPage('appointments')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://picsum.photos/seed/records/400/200.jpg" class="card-img-top" alt="Health Records">
+                            <div class="card-body">
+                                <h5 class="card-title">Health Records</h5>
+                                <p class="card-text">Access and manage your medical records, test results, and prescription history anytime.</p>
+                                <a href="#" class="btn btn-primary" onclick="showPage('login')">Access Records</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="container my-5">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-card primary">
+                            <div class="icon" style="background-color: rgba(13, 110, 253, 0.1); color: var(--primary-color);">
+                                <i class="bi bi-hospital"></i>
+                            </div>
+                            <h3>50+</h3>
+                            <p>Hospitals</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card success">
+                            <div class="icon" style="background-color: rgba(25, 135, 84, 0.1); color: var(--success-color);">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <h3>1000+</h3>
+                            <p>Doctors</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card warning">
+                            <div class="icon" style="background-color: rgba(255, 193, 7, 0.1); color: var(--warning-color);">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <h3>10000+</h3>
+                            <p>Daily Appointments</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card info">
+                            <div class="icon" style="background-color: rgba(13, 202, 240, 0.1); color: var(--info-color);">
+                                <i class="bi bi-emoji-smile"></i>
+                            </div>
+                            <h3>1M+</h3>
+                            <p>Happy Patients</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Login/Register Page -->
+        <div id="auth-page" class="page-content" style="display: none;">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-image"></div>
+                    <div class="auth-form">
+                        <h2>Welcome to Hospital Portal</h2>
+                        <p>Your trusted healthcare partner</p>
+                        
+                        <div class="auth-tabs">
+                            <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                            <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+                        </div>
+                        
+                        <!-- Login Form -->
+                        <div id="login-form" class="auth-content active">
+                            <form onsubmit="handleLogin(event)">
+                                <div class="mb-3">
+                                    <label for="login-email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="login-email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="login-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="login-password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember-me">
+                                    <label class="form-check-label" for="remember-me">Remember me</label>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                    <a href="#" class="text-center">Forgot Password?</a>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Register Form -->
+                        <div id="register-form" class="auth-content">
+                            <form onsubmit="handleRegister(event)">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="register-fname" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="register-fname" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="register-lname" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="register-lname" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="register-email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="register-email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="register-phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="register-phone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="register-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="register-password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="register-confirm-password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="agree-terms" required>
+                                    <label class="form-check-label" for="agree-terms">I agree to the Terms and Conditions</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Dashboard -->
+        <div id="dashboard-page" class="page-content" style="display: none;">
+            <div class="container">
+                <!-- Patient Header -->
+                <div class="patient-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center">
+                            <img src="https://picsum.photos/seed/patient/200/200.jpg" alt="Patient" class="patient-avatar">
+                        </div>
+                        <div class="col-md-7">
+                            <h2 id="patient-name">John Doe</h2>
+                            <p>Patient ID: #12345 | Age: 35 | Blood Group: O+</p>
+                            <p class="mb-0">Last Visit: May 15, 2023</p>
+                        </div>
+                        <div class="col-md-3 text-md-end">
+                            <button class="btn btn-light me-2">
+                                <i class="bi bi-pencil-square me-1"></i> Edit Profile
+                            </button>
+                            <button class="btn btn-outline-light" onclick="logout()">
+                                <i class="bi bi-box-arrow-right me-1"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Statistics -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-card primary">
+                            <div class="icon" style="background-color: rgba(13, 110, 253, 0.1); color: var(--primary-color);">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <h3>2</h3>
+                            <p>Upcoming Appointments</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card success">
+                            <div class="icon" style="background-color: rgba(25, 135, 84, 0.1); color: var(--success-color);">
+                                <i class="bi bi-file-medical"></i>
+                            </div>
+                            <h3>5</h3>
+                            <p>Medical Records</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card warning">
+                            <div class="icon" style="background-color: rgba(255, 193, 7, 0.1); color: var(--warning-color);">
+                                <i class="bi bi-capsule"></i>
+                            </div>
+                            <h3>3</h3>
+                            <p>Active Prescriptions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card info">
+                            <div class="icon" style="background-color: rgba(13, 202, 240, 0.1); color: var(--info-color);">
+                                <i class="bi bi-credit-card"></i>
+                            </div>
+                            <h3>2</h3>
+                            <p>Lab Reports</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-button active" onclick="switchTab('appointments')">Appointments</button>
+                    <button class="tab-button" onclick="switchTab('records')">Medical Records</button>
+                    <button class="tab-button" onclick="switchTab('prescriptions')">Prescriptions</button>
+                    <button class="tab-button" onclick="switchTab('reports')">Lab Reports</button>
+                </div>
+
+                <!-- Appointments Tab -->
+                <div id="appointments-tab" class="tab-content active">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Upcoming Appointments</h3>
+                        <button class="btn btn-primary" onclick="showPage('appointments')">
+                            <i class="bi bi-plus-circle me-1"></i> Book New Appointment
+                        </button>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="appointment-card">
+                                <div class="appointment-date">June 20, 2023 - 10:00 AM</div>
+                                <h5>Dr. Sarah Johnson</h5>
+                                <p class="text-muted mb-2">Cardiologist</p>
+                                <p class="mb-3">Follow-up consultation for heart condition review</p>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment('A12345')">View</button>
+                                    <button class="btn btn-sm btn-outline-primary">Reschedule</button>
+                                    <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="appointment-card">
+                                <div class="appointment-date">June 25, 2023 - 2:30 PM</div>
+                                <h5>Dr. Michael Chen</h5>
+                                <p class="text-muted mb-2">Orthopedic Surgeon</p>
+                                <p class="mb-3">Initial consultation for knee pain</p>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment('A12346')">View</button>
+                                    <button class="btn btn-sm btn-outline-primary">Reschedule</button>
+                                    <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Records Tab -->
+                <div id="records-tab" class="tab-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Medical Records</h3>
+                        <button class="btn btn-primary">
+                            <i class="bi bi-download me-1"></i> Download All
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Doctor</th>
+                                    <th>Department</th>
+                                    <th>Diagnosis</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>May 15, 2023</td>
+                                    <td>Dr. Sarah Johnson</td>
+                                    <td>Cardiology</td>
+                                    <td>Hypertension</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewMedicalRecord('MR001')">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>April 10, 2023</td>
+                                    <td>Dr. Emily Wilson</td>
+                                    <td>General Medicine</td>
+                                    <td>Seasonal Flu</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewMedicalRecord('MR002')">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>March 5, 2023</td>
+                                    <td>Dr. Robert Brown</td>
+                                    <td>Dermatology</td>
+                                    <td>Skin Allergy</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewMedicalRecord('MR003')">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>February 20, 2023</td>
+                                    <td>Dr. Sarah Johnson</td>
+                                    <td>Cardiology</td>
+                                    <td>Chest Pain Evaluation</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewMedicalRecord('MR004')">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>January 15, 2023</td>
+                                    <td>Dr. Michael Chen</td>
+                                    <td>Orthopedics</td>
+                                    <td>Knee Pain</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewMedicalRecord('MR005')">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Prescriptions Tab -->
+                <div id="prescriptions-tab" class="tab-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Prescriptions</h3>
+                        <button class="btn btn-primary">
+                            <i class="bi bi-download me-1"></i> Download All
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Doctor</th>
+                                    <th>Medicine</th>
+                                    <th>Dosage</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>May 15, 2023</td>
+                                    <td>Dr. Sarah Johnson</td>
+                                    <td>Lisinopril</td>
+                                    <td>10mg, Once daily</td>
+                                    <td>30 days</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewPrescription('PR001')">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Refill</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>April 10, 2023</td>
+                                    <td>Dr. Emily Wilson</td>
+                                    <td>Paracetamol</td>
+                                    <td>500mg, As needed</td>
+                                    <td>7 days</td>
+                                    <td><span class="badge bg-secondary">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewPrescription('PR002')">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>March 5, 2023</td>
+                                    <td>Dr. Robert Brown</td>
+                                    <td>Cetirizine</td>
+                                    <td>10mg, Once daily</td>
+                                    <td>14 days</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewPrescription('PR003')">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Refill</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Lab Reports Tab -->
+                <div id="reports-tab" class="tab-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Lab Reports</h3>
+                        <button class="btn btn-primary">
+                            <i class="bi bi-download me-1"></i> Download All
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Test Type</th>
+                                    <th>Doctor</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>May 15, 2023</td>
+                                    <td>Complete Blood Count</td>
+                                    <td>Dr. Sarah Johnson</td>
+                                    <td><span class="badge bg-success">Available</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewLabReport('LR001')">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Download</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>May 10, 2023</td>
+                                    <td>Lipid Profile</td>
+                                    <td>Dr. Sarah Johnson</td>
+                                    <td><span class="badge bg-success">Available</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewLabReport('LR002')">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Download</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>May 20, 2023</td>
+                                    <td>X-Ray - Chest</td>
+                                    <td>Dr. Michael Chen</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewLabReport('LR003')">View</button>
+                                        <button class="btn btn-sm btn-outline-success" disabled>Download</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Page -->
+        <div id="appointments-page" class="page-content" style="display: none;">
+            <div class="container">
+                <div class="form-section">
+                    <h2>Book an Appointment</h2>
+                    <form onsubmit="bookAppointment(event)">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="appointment-department" class="form-label">Select Department</label>
+                                <select class="form-select" id="appointment-department" required>
+                                    <option value="">Select Department</option>
+                                    <option value="cardiology">Cardiology</option>
+                                    <option value="orthopedics">Orthopedics</option>
+                                    <option value="neurology">Neurology</option>
+                                    <option value="pediatrics">Pediatrics</option>
+                                    <option value="gynecology">Gynecology</option>
+                                    <option value="dermatology">Dermatology</option>
+                                    <option value="general">General Medicine</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="appointment-doctor" class="form-label">Select Doctor</label>
+                                <select class="form-select" id="appointment-doctor" required>
+                                    <option value="">Select Doctor</option>
+                                    <option value="dr1">Dr. Sarah Johnson - Cardiologist</option>
+                                    <option value="dr2">Dr. Michael Chen - Orthopedic Surgeon</option>
+                                    <option value="dr3">Dr. Emily Wilson - General Physician</option>
+                                    <option value="dr4">Dr. Robert Brown - Dermatologist</option>
+                                    <option value="dr5">Dr. Lisa Anderson - Pediatrician</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="appointment-date" class="form-label">Appointment Date</label>
+                                <input type="date" class="form-control" id="appointment-date" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="appointment-time" class="form-label">Preferred Time</label>
+                                <select class="form-select" id="appointment-time" required>
+                                    <option value="">Select Time</option>
+                                    <option value="09:00">09:00 AM</option>
+                                    <option value="09:30">09:30 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="10:30">10:30 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="11:30">11:30 AM</option>
+                                    <option value="14:00">02:00 PM</option>
+                                    <option value="14:30">02:30 PM</option>
+                                    <option value="15:00">03:00 PM</option>
+                                    <option value="15:30">03:30 PM</option>
+                                    <option value="16:00">04:00 PM</option>
+                                    <option value="16:30">04:30 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appointment-reason" class="form-label">Reason for Visit</label>
+                            <textarea class="form-control" id="appointment-reason" rows="3" required></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary">Book Appointment</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <h3>Your Recent Appointments</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Doctor</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#A12345</td>
+                                <td>June 20, 2023</td>
+                                <td>10:00 AM</td>
+                                <td>Dr. Sarah Johnson</td>
+                                <td>Cardiology</td>
+                                <td><span class="badge bg-primary">Confirmed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment('A12345')">View</button>
+                                    <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#A12346</td>
+                                <td>June 25, 2023</td>
+                                <td>2:30 PM</td>
+                                <td>Dr. Michael Chen</td>
+                                <td>Orthopedics</td>
+                                <td><span class="badge bg-primary">Confirmed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment('A12346')">View</button>
+                                    <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#A12343</td>
+                                <td>May 15, 2023</td>
+                                <td>11:00 AM</td>
+                                <td>Dr. Sarah Johnson</td>
+                                <td>Cardiology</td>
+                                <td><span class="badge bg-success">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment('A12343')">View</button>
+                                    <button class="btn btn-sm btn-outline-success">Book Follow-up</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#A12342</td>
+                                <td>April 10, 2023</td>
+                                <td>2:00 PM</td>
+                                <td>Dr. Emily Wilson</td>
+                                <td>General Medicine</td>
+                                <td><span class="badge bg-success">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment('A12342')">View</button>
+                                    <button class="btn btn-sm btn-outline-success">Book Follow-up</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Page -->
+        <div id="services-page" class="page-content" style="display: none;">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-3">Our Services</h2>
+                        <p class="text-muted">Comprehensive healthcare services for all your medical needs</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://picsum.photos/seed/consultation2/400/200.jpg" class="card-img-top" alt="Online Consultation">
+                            <div class="card-body">
+                                <h5 class="card-title">Online Consultation</h5>
+                                <p class="card-text">Connect with specialist doctors from the comfort of your home through video consultation.</p>
+                                <a href="#" class="btn btn-primary" onclick="showPage('appointments')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://picsum.photos/seed/appointment2/400/200.jpg" class="card-img-top" alt="Appointment Booking">
+                            <div class="card-body">
+                                <h5 class="card-title">Appointment Booking</h5>
+                                <p class="card-text">Schedule appointments with doctors at your preferred time and date with our easy booking system.</p>
+                                <a href="#" class="btn btn-primary" onclick="showPage('appointments')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://picsum.photos/seed/records2/400/200.jpg" class="card-img-top" alt="Health Records">
+                            <div class="card-body">
+                                <h5 class="card-title">Health Records</h5>
+                                <p class="card-text">Access and manage your medical records, test results, and prescription history anytime.</p>
+                                <a href="#" class="btn btn-primary" onclick="showPage('login')">Access Records</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doctors Page -->
+        <div id="doctors-page" class="page-content" style="display: none;">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-3">Our Doctors</h2>
+                        <p class="text-muted">Meet our team of experienced and dedicated healthcare professionals</p>
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://picsum.photos/seed/doctor1/400/300.jpg" class="card-img-top" alt="Dr. Sarah Johnson">
+                            <div class="card-body">
+                                <h5 class="card-title">Dr. Sarah Johnson</h5>
+                                <p class="text-muted">Cardiologist</p>
+                                <p class="card-text">15 years of experience in treating heart conditions and performing cardiac procedures.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-half text-warning"></i>
+                                        <span class="text-muted">(4.5)</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm" onclick="showPage('appointments')">Book Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://picsum.photos/seed/doctor2/400/300.jpg" class="card-img-top" alt="Dr. Michael Chen">
+                            <div class="card-body">
+                                <h5 class="card-title">Dr. Michael Chen</h5>
+                                <p class="text-muted">Orthopedic Surgeon</p>
+                                <p class="card-text">Specialized in joint replacement surgeries and sports medicine with 12 years of experience.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <span class="text-muted">(5.0)</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm" onclick="showPage('appointments')">Book Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Departments Page -->
+        <div id="departments-page" class="page-content" style="display: none;">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-3">Our Departments</h2>
+                        <p class="text-muted">We have various departments to cater to all your medical needs</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-heart-pulse-fill text-danger fs-1 mb-3"></i>
+                                <h5 class="card-title">Cardiology</h5>
+                                <p class="card-text">Diagnosis and treatment of heart conditions and cardiovascular diseases.</p>
+                                <a href="#" class="btn btn-outline-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-bone-fill text-info fs-1 mb-3"></i>
+                                <h5 class="card-title">Orthopedics</h5>
+                                <p class="card-text">Treatment of musculoskeletal system including bones, joints, ligaments, and muscles.</p>
+                                <a href="#" class="btn btn-outline-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-brain-fill text-warning fs-1 mb-3"></i>
+                                <h5 class="card-title">Neurology</h5>
+                                <p class="card-text">Diagnosis and treatment of disorders of the brain, spinal cord, and nervous system.</p>
+                                <a href="#" class="btn btn-outline-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact-page" class="page-content" style="display: none;">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-3">Contact Us</h2>
+                        <p class="text-muted">We're here to help and answer any questions you might have</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-geo-alt-fill text-danger fs-1 mb-3"></i>
+                                <h5 class="card-title">Our Location</h5>
+                                <p class="card-text">123 Healthcare Avenue<br>Medical District, City<br>State, 123456</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-telephone-fill text-success fs-1 mb-3"></i>
+                                <h5 class="card-title">Phone Numbers</h5>
+                                <p class="card-text">Emergency: +91 12345 67890<br>Appointment: +91 12345 67891<br>General: +91 12345 67892</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-envelope-fill text-primary fs-1 mb-3"></i>
+                                <h5 class="card-title">Email Addresses</h5>
+                                <p class="card-text">Emergency: emergency@hospital.com<br>Appointment: appointment@hospital.com<br>General: info@hospital.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h2>Send Us a Message</h2>
+                    <form onsubmit="sendMessage(event)">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="contact-name" class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="contact-name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="contact-email" class="form-label">Your Email</label>
+                                <input type="email" class="form-control" id="contact-email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contact-subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="contact-subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contact-message" class="form-label">Message</label>
+                            <textarea class="form-control" id="contact-message" rows="5" required></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Hospital Portal</h5>
+                    <p>Your trusted online platform for healthcare services. We provide comprehensive medical care with advanced technology and experienced doctors.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('services')">Services</a></li>
+                        <li><a href="#" onclick="showPage('doctors')">Doctors</a></li>
+                        <li><a href="#" onclick="showPage('appointments')">Appointments</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Services</h5>
+                    <ul>
+                        <li><a href="#">Online Consultation</a></li>
+                        <li><a href="#">Appointment Booking</a></li>
+                        <li><a href="#">Health Records</a></li>
+                        <li><a href="#">Emergency Services</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Departments</h5>
+                    <ul>
+                        <li><a href="#">Cardiology</a></li>
+                        <li><a href="#">Orthopedics</a></li>
+                        <li><a href="#">Neurology</a></li>
+                        <li><a href="#">Pediatrics</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Hospital Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <!-- Appointment Details Modal -->
+    <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentModalLabel">Appointment Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Appointment ID:</span>
+                            <span id="modal-appointment-id"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Status:</span>
+                            <span id="modal-appointment-status"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Date:</span>
+                            <span id="modal-appointment-date"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Time:</span>
+                            <span id="modal-appointment-time"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Doctor:</span>
+                            <span id="modal-appointment-doctor"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Department:</span>
+                            <span id="modal-appointment-department"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Reason for Visit:</span>
+                        <p id="modal-appointment-reason" class="mt-2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Doctor's Notes:</span>
+                        <p id="modal-appointment-notes" class="mt-2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Prescription:</span>
+                        <p id="modal-appointment-prescription" class="mt-2"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Record Modal -->
+    <div class="modal fade" id="medicalRecordModal" tabindex="-1" aria-labelledby="medicalRecordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="medicalRecordModalLabel">Medical Record Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Record ID:</span>
+                            <span id="modal-record-id"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Date:</span>
+                            <span id="modal-record-date"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Doctor:</span>
+                            <span id="modal-record-doctor"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Department:</span>
+                            <span id="modal-record-department"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Diagnosis:</span>
+                        <p id="modal-record-diagnosis" class="mt-2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Symptoms:</span>
+                        <p id="modal-record-symptoms" class="mt-2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Treatment:</span>
+                        <p id="modal-record-treatment" class="mt-2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Follow-up Instructions:</span>
+                        <p id="modal-record-followup" class="mt-2"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prescription Modal -->
+    <div class="modal fade" id="prescriptionModal" tabindex="-1" aria-labelledby="prescriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="prescriptionModalLabel">Prescription Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Prescription ID:</span>
+                            <span id="modal-prescription-id"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Date:</span>
+                            <span id="modal-prescription-date"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Doctor:</span>
+                            <span id="modal-prescription-doctor"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Status:</span>
+                            <span id="modal-prescription-status"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Medicine:</span>
+                        <p id="modal-prescription-medicine" class="mt-2"></p>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Dosage:</span>
+                            <span id="modal-prescription-dosage"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Duration:</span>
+                            <span id="modal-prescription-duration"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Instructions:</span>
+                        <p id="modal-prescription-instructions" class="mt-2"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lab Report Modal -->
+    <div class="modal fade" id="labReportModal" tabindex="-1" aria-labelledby="labReportModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="labReportModalLabel">Lab Report Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Report ID:</span>
+                            <span id="modal-report-id"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Date:</span>
+                            <span id="modal-report-date"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <span class="detail-label">Test Type:</span>
+                            <span id="modal-report-type"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="detail-label">Doctor:</span>
+                            <span id="modal-report-doctor"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Test Results:</span>
+                        <div id="modal-report-results" class="mt-2"></div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Normal Range:</span>
+                        <p id="modal-report-normal" class="mt-2"></p>
+                    </div>
+                    <div class="mb-3">
+                        <span class="detail-label">Doctor's Comments:</span>
+                        <p id="modal-report-comments" class="mt-2"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Application State
+        let currentUser = null;
+        let currentPage = 'home';
+
+        // Sample Data
+        const appointmentsData = {
+            'A12345': {
+                id: 'A12345',
+                date: 'June 20, 2023',
+                time: '10:00 AM',
+                doctor: 'Dr. Sarah Johnson',
+                department: 'Cardiology',
+                status: 'Confirmed',
+                reason: 'Follow-up consultation for heart condition review',
+                notes: 'Patient\'s blood pressure is well controlled with current medication. Continue current treatment plan.',
+                prescription: 'Lisinopril 10mg - Once daily for 30 days'
+            },
+            'A12346': {
+                id: 'A12346',
+                date: 'June 25, 2023',
+                time: '2:30 PM',
+                doctor: 'Dr. Michael Chen',
+                department: 'Orthopedics',
+                status: 'Confirmed',
+                reason: 'Initial consultation for knee pain',
+                notes: 'Patient reports knee pain for 3 months. X-ray recommended.',
+                prescription: 'Paracetamol 500mg - As needed for pain'
+            },
+            'A12343': {
+                id: 'A12343',
+                date: 'May 15, 2023',
+                time: '11:00 AM',
+                doctor: 'Dr. Sarah Johnson',
+                department: 'Cardiology',
+                status: 'Completed',
+                reason: 'Regular heart checkup',
+                notes: 'ECG normal. Blood pressure slightly elevated. Lifestyle changes recommended.',
+                prescription: 'Lisinopril 10mg - Once daily for 30 days'
+            },
+            'A12342': {
+                id: 'A12342',
+                date: 'April 10, 2023',
+                time: '2:00 PM',
+                doctor: 'Dr. Emily Wilson',
+                department: 'General Medicine',
+                status: 'Completed',
+                reason: 'Fever and cough',
+                notes: 'Diagnosed with seasonal flu. Rest and fluids recommended.',
+                prescription: 'Paracetamol 500mg - As needed for fever'
+            }
+        };
+
+        const medicalRecordsData = {
+            'MR001': {
+                id: 'MR001',
+                date: 'May 15, 2023',
+                doctor: 'Dr. Sarah Johnson',
+                department: 'Cardiology',
+                diagnosis: 'Hypertension (Stage 1)',
+                symptoms: 'Occasional headaches, elevated blood pressure readings',
+                treatment: 'Lifestyle modifications including diet and exercise. Started on antihypertensive medication.',
+                followup: 'Follow-up in 3 months to monitor blood pressure response'
+            },
+            'MR002': {
+                id: 'MR002',
+                date: 'April 10, 2023',
+                doctor: 'Dr. Emily Wilson',
+                department: 'General Medicine',
+                diagnosis: 'Seasonal Influenza',
+                symptoms: 'Fever, cough, body aches, fatigue',
+                treatment: 'Symptomatic treatment with antipyretics and rest. Adequate fluid intake.',
+                followup: 'Return if symptoms worsen or persist beyond 7 days'
+            },
+            'MR003': {
+                id: 'MR003',
+                date: 'March 5, 2023',
+                doctor: 'Dr. Robert Brown',
+                department: 'Dermatology',
+                diagnosis: 'Allergic Contact Dermatitis',
+                symptoms: 'Skin rash, itching, redness on arms',
+                treatment: 'Topical corticosteroid cream and antihistamines. Avoid allergens.',
+                followup: 'Follow-up in 2 weeks to assess response'
+            },
+            'MR004': {
+                id: 'MR004',
+                date: 'February 20, 2023',
+                doctor: 'Dr. Sarah Johnson',
+                department: 'Cardiology',
+                diagnosis: 'Atypical Chest Pain',
+                symptoms: 'Intermittent chest discomfort, shortness of breath on exertion',
+                treatment: 'Stress test ordered. Started on beta-blockers. Cardiac evaluation recommended.',
+                followup: 'Follow-up after stress test results'
+            },
+            'MR005': {
+                id: 'MR005',
+                date: 'January 15, 2023',
+                doctor: 'Dr. Michael Chen',
+                department: 'Orthopedics',
+                diagnosis: 'Patellofemoral Pain Syndrome',
+                symptoms: 'Knee pain on stairs and prolonged sitting',
+                treatment: 'Physical therapy, quadriceps strengthening exercises, NSAIDs as needed.',
+                followup: 'Follow-up in 6 weeks'
+            }
+        };
+
+        const prescriptionsData = {
+            'PR001': {
+                id: 'PR001',
+                date: 'May 15, 2023',
+                doctor: 'Dr. Sarah Johnson',
+                status: 'Active',
+                medicine: 'Lisinopril',
+                dosage: '10mg, Once daily',
+                duration: '30 days',
+                instructions: 'Take in the morning with or without food. Monitor blood pressure regularly.'
+            },
+            'PR002': {
+                id: 'PR002',
+                date: 'April 10, 2023',
+                doctor: 'Dr. Emily Wilson',
+                status: 'Completed',
+                medicine: 'Paracetamol',
+                dosage: '500mg, As needed',
+                duration: '7 days',
+                instructions: 'Take for fever or pain as needed. Do not exceed 4g in 24 hours.'
+            },
+            'PR003': {
+                id: 'PR003',
+                date: 'March 5, 2023',
+                doctor: 'Dr. Robert Brown',
+                status: 'Active',
+                medicine: 'Cetirizine',
+                dosage: '10mg, Once daily',
+                duration: '14 days',
+                instructions: 'Take at bedtime. May cause drowsiness.'
+            }
+        };
+
+        const labReportsData = {
+            'LR001': {
+                id: 'LR001',
+                date: 'May 15, 2023',
+                type: 'Complete Blood Count',
+                doctor: 'Dr. Sarah Johnson',
+                results: `
+                    <table class="table table-sm">
+                        <tr><td>Hemoglobin</td><td>14.2 g/dL</td><td>Normal</td></tr>
+                        <tr><td>WBC Count</td><td>7,500 /μL</td><td>Normal</td></tr>
+                        <tr><td>RBC Count</td><td>4.8 million/μL</td><td>Normal</td></tr>
+                        <tr><td>Platelet Count</td><td>250,000 /μL</td><td>Normal</td></tr>
+                    </table>
+                `,
+                normal: 'All values within normal range',
+                comments: 'No abnormal findings. Good overall health indicators.'
+            },
+            'LR002': {
+                id: 'LR002',
+                date: 'May 10, 2023',
+                type: 'Lipid Profile',
+                doctor: 'Dr. Sarah Johnson',
+                results: `
+                    <table class="table table-sm">
+                        <tr><td>Total Cholesterol</td><td>210 mg/dL</td><td>Borderline High</td></tr>
+                        <tr><td>LDL</td><td>135 mg/dL</td><td>Borderline High</td></tr>
+                        <tr><td>HDL</td><td>45 mg/dL</td><td>Normal</td></tr>
+                        <tr><td>Triglycerides</td><td>150 mg/dL</td><td>Normal</td></tr>
+                    </table>
+                `,
+                normal: 'Total cholesterol and LDL slightly elevated',
+                comments: 'Dietary modifications recommended. Follow-up in 3 months.'
+            },
+            'LR003': {
+                id: 'LR003',
+                date: 'May 20, 2023',
+                type: 'X-Ray - Chest',
+                doctor: 'Dr. Michael Chen',
+                results: 'Report pending from radiology department',
+                normal: 'Awaiting results',
+                comments: 'Patient will be notified once report is available'
+            }
+        };
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date for appointment booking to today
+            const today = new Date().toISOString().split('T')[0];
+            const appointmentDateInput = document.getElementById('appointment-date');
+            if (appointmentDateInput) {
+                appointmentDateInput.min = today;
+            }
+        });
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Show selected page
+            if (pageName === 'login' || pageName === 'register') {
+                document.getElementById('auth-page').style.display = 'block';
+                if (pageName === 'login') {
+                    switchAuthTab('login');
+                } else {
+                    switchAuthTab('register');
+                }
+            } else {
+                document.getElementById('auth-page').style.display = 'none';
+                const targetPage = document.getElementById(`${pageName}-page`);
+                if (targetPage) {
+                    targetPage.style.display = 'block';
+                }
+            }
+            
+            // Update navigation active state
+            document.querySelectorAll('.main-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`.main-nav .nav-link[onclick="showPage('${pageName}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Update current page
+            currentPage = pageName;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Auth Tab Switching
+        function switchAuthTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const activeTab = document.querySelector(`.auth-tab[onclick="switchAuthTab('${tabName}')"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+            
+            // Update tab content
+            document.querySelectorAll('.auth-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const activeContent = document.getElementById(`${tabName}-form`);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+        }
+
+        // Dashboard Tab Switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const activeTab = document.querySelector(`.tab-button[onclick="switchTab('${tabName}')"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const activeContent = document.getElementById(`${tabName}-tab`);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+        }
+
+        // View Appointment Details
+        function viewAppointment(appointmentId) {
+            const appointment = appointmentsData[appointmentId];
+            if (!appointment) {
+                showNotification('error', 'Error', 'Appointment details not found');
+                return;
+            }
+
+            // Populate modal with appointment data
+            document.getElementById('modal-appointment-id').textContent = appointment.id;
+            document.getElementById('modal-appointment-date').textContent = appointment.date;
+            document.getElementById('modal-appointment-time').textContent = appointment.time;
+            document.getElementById('modal-appointment-doctor').textContent = appointment.doctor;
+            document.getElementById('modal-appointment-department').textContent = appointment.department;
+            document.getElementById('modal-appointment-status').textContent = appointment.status;
+            document.getElementById('modal-appointment-reason').textContent = appointment.reason;
+            document.getElementById('modal-appointment-notes').textContent = appointment.notes;
+            document.getElementById('modal-appointment-prescription').textContent = appointment.prescription;
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('appointmentModal'));
+            modal.show();
+        }
+
+        // View Medical Record
+        function viewMedicalRecord(recordId) {
+            const record = medicalRecordsData[recordId];
+            if (!record) {
+                showNotification('error', 'Error', 'Medical record not found');
+                return;
+            }
+
+            // Populate modal with record data
+            document.getElementById('modal-record-id').textContent = record.id;
+            document.getElementById('modal-record-date').textContent = record.date;
+            document.getElementById('modal-record-doctor').textContent = record.doctor;
+            document.getElementById('modal-record-department').textContent = record.department;
+            document.getElementById('modal-record-diagnosis').textContent = record.diagnosis;
+            document.getElementById('modal-record-symptoms').textContent = record.symptoms;
+            document.getElementById('modal-record-treatment').textContent = record.treatment;
+            document.getElementById('modal-record-followup').textContent = record.followup;
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('medicalRecordModal'));
+            modal.show();
+        }
+
+        // View Prescription
+        function viewPrescription(prescriptionId) {
+            const prescription = prescriptionsData[prescriptionId];
+            if (!prescription) {
+                showNotification('error', 'Error', 'Prescription not found');
+                return;
+            }
+
+            // Populate modal with prescription data
+            document.getElementById('modal-prescription-id').textContent = prescription.id;
+            document.getElementById('modal-prescription-date').textContent = prescription.date;
+            document.getElementById('modal-prescription-doctor').textContent = prescription.doctor;
+            document.getElementById('modal-prescription-status').textContent = prescription.status;
+            document.getElementById('modal-prescription-medicine').textContent = prescription.medicine;
+            document.getElementById('modal-prescription-dosage').textContent = prescription.dosage;
+            document.getElementById('modal-prescription-duration').textContent = prescription.duration;
+            document.getElementById('modal-prescription-instructions').textContent = prescription.instructions;
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('prescriptionModal'));
+            modal.show();
+        }
+
+        // View Lab Report
+        function viewLabReport(reportId) {
+            const report = labReportsData[reportId];
+            if (!report) {
+                showNotification('error', 'Error', 'Lab report not found');
+                return;
+            }
+
+            // Populate modal with report data
+            document.getElementById('modal-report-id').textContent = report.id;
+            document.getElementById('modal-report-date').textContent = report.date;
+            document.getElementById('modal-report-type').textContent = report.type;
+            document.getElementById('modal-report-doctor').textContent = report.doctor;
+            document.getElementById('modal-report-results').innerHTML = report.results;
+            document.getElementById('modal-report-normal').textContent = report.normal;
+            document.getElementById('modal-report-comments').textContent = report.comments;
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('labReportModal'));
+            modal.show();
+        }
+
+        // Login Handler
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simulate login validation
+            if (email && password) {
+                // Set current user
+                currentUser = {
+                    name: 'John Doe',
+                    email: email,
+                    id: '12345'
+                };
+                
+                // Update patient name in dashboard
+                const patientNameElement = document.getElementById('patient-name');
+                if (patientNameElement) {
+                    patientNameElement.textContent = currentUser.name;
+                }
+                
+                // Show success notification
+                showNotification('success', 'Login Successful', `Welcome back, ${currentUser.name}!`);
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    showPage('dashboard');
+                }, 1500);
+            }
+        }
+
+        // Register Handler
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const fname = document.getElementById('register-fname').value;
+            const lname = document.getElementById('register-lname').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showNotification('error', 'Registration Failed', 'Passwords do not match');
+                return;
+            }
+            
+            // Simulate registration
+            if (fname && lname && email && password) {
+                // Set current user
+                currentUser = {
+                    name: `${fname} ${lname}`,
+                    email: email,
+                    id: '12345'
+                };
+                
+                // Update patient name in dashboard
+                const patientNameElement = document.getElementById('patient-name');
+                if (patientNameElement) {
+                    patientNameElement.textContent = currentUser.name;
+                }
+                
+                // Show success notification
+                showNotification('success', 'Registration Successful', `Welcome to Hospital Portal, ${currentUser.name}!`);
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    showPage('dashboard');
+                }, 1500);
+            }
+        }
+
+        // Logout Handler
+        function logout() {
+            currentUser = null;
+            showNotification('info', 'Logged Out', 'You have been successfully logged out');
+            setTimeout(() => {
+                showPage('home');
+            }, 1000);
+        }
+
+        // Book Appointment Handler
+        function bookAppointment(event) {
+            event.preventDefault();
+            
+            const department = document.getElementById('appointment-department').value;
+            const doctor = document.getElementById('appointment-doctor').value;
+            const date = document.getElementById('appointment-date').value;
+            const time = document.getElementById('appointment-time').value;
+            const reason = document.getElementById('appointment-reason').value;
+            
+            // Check if user is logged in
+            if (!currentUser) {
+                showNotification('warning', 'Login Required', 'Please login to book an appointment');
+                setTimeout(() => {
+                    showPage('login');
+                }, 1500);
+                return;
+            }
+            
+            // Simulate appointment booking
+            if (department && doctor && date && time && reason) {
+                // Show success notification
+                showNotification('success', 'Appointment Booked', `Your appointment has been successfully booked for ${date} at ${time}`);
+                
+                // Reset form
+                event.target.reset();
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    showPage('dashboard');
+                }, 1500);
+            }
+        }
+
+        // Send Message Handler
+        function sendMessage(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            
+            // Simulate message sending
+            if (name && email && subject && message) {
+                // Show success notification
+                showNotification('success', 'Message Sent', 'Your message has been successfully sent. We will get back to you soon.');
+                
+                // Reset form
+                event.target.reset();
+            }
+        }
+
+        // Notification System
+        function showNotification(type, title, message) {
+            const notificationContainer = document.getElementById('notification-container');
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            // Set icon based on type
+            let icon;
+            switch(type) {
+                case 'success':
+                    icon = 'bi-check-circle-fill';
+                    break;
+                case 'error':
+                    icon = 'bi-x-circle-fill';
+                    break;
+                case 'warning':
+                    icon = 'bi-exclamation-triangle-fill';
+                    break;
+                case 'info':
+                    icon = 'bi-info-circle-fill';
+                    break;
+                default:
+                    icon = 'bi-info-circle-fill';
+            }
+            
+            // Set notification content
+            notification.innerHTML = `
+                <i class="bi ${icon}"></i>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">
+                    <i class="bi bi-x"></i>
+                </button>
+            `;
+            
+            // Add notification to container
+            notificationContainer.appendChild(notification);
+            
+            // Auto remove notification after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
